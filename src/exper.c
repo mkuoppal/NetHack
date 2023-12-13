@@ -66,8 +66,9 @@ newpw(void)
     if (en <= 0)
         en = 1;
     if (u.ulevel < MAXULEV) {
+        int i = u.ulevel ? u.ulevel - 1 : 0;
         /* remember increment; future level drain could take it away again */
-        u.ueninc[u.ulevel] = (xint16) en;
+        u.ueninc[i] = (xint16) en;
     } else {
         /* after level 30, throttle energy gains from extra experience;
            once max reaches 600, further increments will be just 1 more */
@@ -242,7 +243,7 @@ losexp(
 
     olduhpmax = u.uhpmax;
     uhpmin = minuhpmax(10); /* same minimum as is used by life-saving */
-    num = (int) u.uhpinc[u.ulevel];
+    num = (int) u.uhpinc[u.ulevel - 1];
     u.uhpmax -= num;
     if (u.uhpmax < uhpmin)
         setuhpmax(uhpmin);
@@ -260,7 +261,7 @@ losexp(
     else if (u.uhp > u.uhpmax)
         u.uhp = u.uhpmax;
 
-    num = (int) u.ueninc[u.ulevel];
+    num = (int) u.ueninc[u.ulevel - 1];
     u.uenmax -= num;
     if (u.uenmax < 0)
         u.uenmax = 0;
