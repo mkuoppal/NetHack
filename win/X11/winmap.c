@@ -361,11 +361,6 @@ post_process_tiles(void)
               tile_image, 0, 0, 0, 0, /* src, dest top left */
               width, height);
 
-#ifdef MONITOR_HEAP
-    /* if we let XDestroyImage() handle it, our tracking will be off */
-    if (tile_image->data)
-        free((genericptr_t) tile_image->data), tile_image->data = 0;
-#endif
     XDestroyImage(tile_image); /* data bytes free'd also */
     tile_image = 0;
 

@@ -26,13 +26,6 @@
 #define Snprintf(str, size, ...) \
     nh_snprintf(__func__, __LINE__, str, size, __VA_ARGS__)
 
-#ifdef MONITOR_HEAP
-/* with heap monitoring enabled, free(ptr) is a macro which expands to
-   nhfree(ptr,__FILE__,__LINE__); since tilemap doesn't link with
-   src/alloc.o it doesn't have access to nhfree(); use actual free */
-#undef free
-#endif
-
 #define Fprintf (void) fprintf
 
 /*

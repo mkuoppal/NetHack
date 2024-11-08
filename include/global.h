@@ -312,44 +312,14 @@ typedef uchar nhsym;
  *  Null; if memory runs out, it calls panic() and does not return at all.
  */
 
-/* dupstr() is unconditional in alloc.c but not used when MONITOR_HEAP
-   is enabled; some utility programs link with alloc.{o,obj} and need it
-   if nethack is built with MONITOR_HEAP enabled and they aren't; this
-   declaration has been moved out of the '#else' below to avoid getting
-   a complaint from -Wmissing-prototypes when building with MONITOR_HEAP */
 extern char *dupstr(const char *) NONNULL NONNULLARG1;
 /* same, but return strlen(string) in extra argument */
 extern char *dupstr_n(const char *string,
                       unsigned *lenout) NONNULL NONNULLPTRS;
 
-/*
- * MONITOR_HEAP is conditionally used for primitive memory leak debugging.
- * When enabled, NH_HEAPLOG (if defined in the environment) is used as the
- * name of a log file to create for capturing allocations and releases.
- * [The 'heaputil' program to analyze that file isn't included in releases.]
- *
- * See alloc.c.
- */
-#ifdef MONITOR_HEAP
-/* plain alloc() is not declared except in alloc.c */
-extern long *nhalloc(unsigned int, const char *, int) NONNULL NONNULLARG2;
-extern long *nhrealloc(long *, unsigned int, const char *,
-                       int) NONNULL NONNULLARG3;
-extern void nhfree(genericptr_t, const char *, int) NONNULLARG2;
-extern char *nhdupstr(const char *, const char *, int) NONNULL NONNULLPTRS;
-/* this predates C99's __func__; that is trickier to use conditionally
-   because it is not implemented as a preprocessor macro; MONITOR_HEAP
-   wouldn't gain much benefit from it anyway so continue to live without it;
-   if func's caller were accessible, that would be a very different issue */
-#define alloc(a) nhalloc(a, __FILE__, (int) __LINE__)
-#define re_alloc(a,n) nhrealloc(a, n, __FILE__, (int) __LINE__)
-#define free(a) nhfree(a, __FILE__, (int) __LINE__)
-#define dupstr(s) nhdupstr(s, __FILE__, (int) __LINE__)
-#else /* !MONITOR_HEAP */
 /* declare alloc.c's alloc(); allocations made with it use ordinary free() */
 extern long *alloc(unsigned int) NONNULL;  /* alloc.c */
 extern long *re_alloc(long *, unsigned int) NONNULL;
-#endif /* ?MONITOR_HEAP */
 
 /* Used for consistency checks of various data files; declare it here so
    that utility programs which include config.h but not hack.h can see it. */

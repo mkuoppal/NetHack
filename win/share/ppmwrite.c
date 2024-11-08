@@ -6,9 +6,7 @@
 #include "config.h"
 #include "tile.h"
 
-#ifndef MONITOR_HEAP
 extern long *alloc(unsigned int);
-#endif
 
 FILE *ppm_file;
 

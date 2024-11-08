@@ -503,9 +503,6 @@ static const char *const build_opts[] = {
 #ifdef MAIL
     "mail daemon",
 #endif
-#ifdef MONITOR_HEAP
-    "monitor heap - record memory usage for later analysis",
-#endif
 #if defined(GNUDOS) || defined(__DJGPP__)
     "MSDOS protected mode",
 #endif

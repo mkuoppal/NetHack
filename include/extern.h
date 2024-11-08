@@ -69,10 +69,6 @@
 
 /* ### alloc.c ### */
 
-#if 0
-/* routines in alloc.c depend on MONITOR_HEAP and are declared in global.h */
-extern long *alloc(unsigned int) NONNULL;
-#endif
 extern char *fmt_ptr(const void *) NONNULL;
 /* moved from hacklib.c to alloc.c so that utility programs have access */
 #define FITSint(x) FITSint_(x, __func__, __LINE__)
