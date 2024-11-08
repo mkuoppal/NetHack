@@ -318,8 +318,8 @@ extern char *dupstr_n(const char *string,
                       unsigned *lenout) NONNULL NONNULLPTRS;
 
 /* declare alloc.c's alloc(); allocations made with it use ordinary free() */
-extern long *alloc(unsigned int) NONNULL;  /* alloc.c */
-extern long *re_alloc(long *, unsigned int) NONNULL;
+extern void *alloc(unsigned int) NONNULL;  /* alloc.c */
+extern void *re_alloc(void *, unsigned int) NONNULL;
 
 /* Used for consistency checks of various data files; declare it here so
    that utility programs which include config.h but not hack.h can see it. */
